@@ -1,1 +1,21 @@
---- {}
+---
+nginx/nginx-1.10.1.tar.gz:
+  object_id: 174d0a1e-307f-4ee7-9e31-6dab5ac47508
+  sha: 9c5d4e06d309bbe2efa41f09dd53912e3c3d3a75
+  size: 909077
+nginx/nginx-push-stream-module-0.5.2.tar.gz:
+  object_id: 1a31f0d1-5738-406a-95f1-9923d7b78efa
+  sha: b0c2a44abde67c7d0886cfff0c62b9bf8ec10a82
+  size: 182008
+nginx/pcre-8.37.tar.gz:
+  object_id: 420f0a96-4534-444b-9ae0-28596f1b07bd
+  sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
+  size: 2041593
+syslog-ng/eventlog_0.2.12.tar.gz:
+  object_id: e2eb40b8-fbb5-40da-bddd-35da8e10a96e
+  sha: 3e35a634e7de029ab9d36995a085bfcb00ed6a4d
+  size: 303925
+syslog-ng/syslog-ng-3.7.3.tar.gz:
+  object_id: 31a2de93-109e-4528-8e8a-86f1f74a7a4a
+  sha: db5f1a14255582499ad9918917d9bdac1fa743c3
+  size: 3511155
