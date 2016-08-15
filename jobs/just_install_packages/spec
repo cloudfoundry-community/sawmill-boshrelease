@@ -1,6 +1,8 @@
 ---
 name: just_install_packages
-packages: []
+packages:
+- nginx
+- syslog-ng
 templates:
   ignoreme: ignoreme
 properties: {}

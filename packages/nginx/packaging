@@ -1,0 +1,27 @@
+set -e -x
+
+echo "Extracting pcre..."
+tar xzvf nginx/pcre-8.37.tar.gz
+
+echo "Extracting nginx..."
+tar xzvf nginx/nginx-1.10.1.tar.gz
+
+echo Extracting Push Stream Module
+tar xzvf nginx/nginx-push-stream-module-0.5.2.tar.gz
+
+echo "Building nginx..."
+pushd nginx-1.10.1
+  ./configure \
+    --prefix=${BOSH_INSTALL_TARGET} \
+    --with-pcre=../pcre-8.37 \
+    --with-http_stub_status_module \
+    --with-http_ssl_module \
+    --with-poll_module \
+    --with-stream \
+    --add-module=../nginx-push-stream-module-0.5.2
+
+  make
+  make install
+popd
+
+${BOSH_INSTALL_TARGET}/sbin/nginx -c $(pwd)/nginx-push-stream-module-0.5.2/misc/nginx.conf -t

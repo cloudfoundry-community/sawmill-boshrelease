@@ -1,0 +1,6 @@
+---
+name: nginx
+files:
+- nginx/nginx-*.tar.gz
+- nginx/pcre-*.tar.gz
+- nginx/nginx-push-stream-module-*.tar.gz

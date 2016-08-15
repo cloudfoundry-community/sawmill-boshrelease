@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+source /var/vcap/jobs/sawmill/helpers/ctl_setup.sh 'sawmill' 'syslog-ng'
+
+export LANG=en_US.UTF-8
+export PKG_CONFIG_PATH=/var/vcap/packages/eventlog/lib/pkgconfig
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+
+    # store pid in $PIDFILE
+    echo $$ > $PIDFILE
+
+    exec /var/vcap/packages/syslog-ng/sbin/syslog-ng -F -f $JOB_DIR/config/syslog-ng.conf \
+      >>$LOG_DIR/syslog-ng.stdout.log 2>>$LOG_DIR/syslog-ng.stderr.log
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+  *)
+    echo "Usage: syslog-ng_ctl {start|stop}"
+
+    ;;
+
+esac
+exit 0

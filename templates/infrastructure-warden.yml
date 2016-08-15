@@ -13,9 +13,10 @@ update:
   update_watch_time: 1000-30000
 
 jobs:
-  - name: just_install_packages
+  - name: sawmill
     networks:
       - name: sawmill1
+        static_ips: (( static_ips(0, 1, 2, 3, 4, 5) ))
 
 compilation:
   cloud_properties:
@@ -35,3 +36,7 @@ networks:
     gateway: 10.244.73.1
     static:
       - 10.244.73.2 - 10.244.73.60
+
+properties:
+  syslog:
+    skip_ssl_verify: true

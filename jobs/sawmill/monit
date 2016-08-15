@@ -1,0 +1,11 @@
+check process nginx
+  with pidfile /var/vcap/sys/run/sawmill/nginx.pid
+  start program "/var/vcap/jobs/sawmill/bin/monit_debugger nginx_ctl '/var/vcap/jobs/sawmill/bin/nginx_ctl start'"
+  stop program "/var/vcap/jobs/sawmill/bin/monit_debugger nginx_ctl '/var/vcap/jobs/sawmill/bin/nginx_ctl stop'"
+  group vcap
+
+check process syslog-ng
+  with pidfile /var/vcap/sys/run/sawmill/syslog-ng.pid
+  start program "/var/vcap/jobs/sawmill/bin/monit_debugger syslog-ng_ctl '/var/vcap/jobs/sawmill/bin/syslog-ng_ctl start'"
+  stop program "/var/vcap/jobs/sawmill/bin/monit_debugger syslog-ng_ctl '/var/vcap/jobs/sawmill/bin/syslog-ng_ctl stop'"
+  group vcap

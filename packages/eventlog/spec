@@ -1,0 +1,5 @@
+---
+name: eventlog
+dependencies: []
+files:
+- syslog-ng/*

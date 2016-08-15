@@ -1,0 +1,22 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=$(grep -c ^processor /proc/cpuinfo)
+ # Available variables
+# $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
+# $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
+export HOME=/var/vcap
+
+VERSION=3.7.3
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y libglib2.0-dev
+
+tar -xzvf syslog-ng/syslog-ng-${VERSION}.tar.gz
+cd syslog-ng-${VERSION}
+export PKG_CONFIG_PATH=/var/vcap/packages/eventlog/lib/pkgconfig
+ ./configure --prefix ${BOSH_INSTALL_TARGET} --disable-python
+make
+make install

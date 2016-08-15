@@ -9,9 +9,10 @@ meta:
     version: latest
 
 jobs:
-  - name: just_install_packages
+  - name: sawmill
     networks:
       - name: sawmill1
+        static_ips: (( static_ips(0, 1, 2, 3, 4, 5) ))
     persistent_disk: (( grab meta.persistent_disk ))
 
 compilation:

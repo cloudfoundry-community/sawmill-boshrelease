@@ -7,9 +7,9 @@ update:
   serial: false
 
 jobs:
-  - name: just_install_packages
+  - name: sawmill
     templates:
-    - name: just_install_packages
+    - name: sawmill
       release: sawmill
     instances: 1
     persistent_disk: 0
@@ -18,4 +18,6 @@ jobs:
 
 networks: (( param "Please configure the global network definitions for this Deployment" ))
 
-properties: {}
+properties:
+  syslog:
+    servers: (( grab jobs.sawmill.networks.0.static_ips ))
