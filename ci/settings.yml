@@ -1,0 +1,21 @@
+---
+meta:
+  name: sawmill
+  url: https://ci.vsphere.starkandwayne.com
+  target: sw
+
+  aws:
+    access_key: (( vault "secret/aws/cfcommunity:access" ))
+    secret_key: (( vault "secret/aws/cfcommunity:secret" ))
+  github:
+    owner: cloudfoundry-community
+    repo:  sawmill-boshrelease
+    private_key:  (( vault "secret/pipelines/sawmill-boshrelease/github:private" ))
+    access_token: (( vault "secret/pipelines/sawmill-boshrelease/github:token" ))
+  bosh-lite:
+    target: https://10.58.111.44:25555
+    deployment: sawmill-warden
+  slack:
+    webhook: (( vault "secret/pipelines/sawmill-boshrelease/slack:webhook" ))
+    channel: "#cf-community-pipeline"
+
