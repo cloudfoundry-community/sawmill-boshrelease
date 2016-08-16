@@ -11,10 +11,10 @@ template t_http {
 };
 
 destination d_http {
-<% p("sawmill.servers").each do |server| %>
+<% link('sawmill').instances.each do |server| %>
     network(
-        "<%= server %>"
-        port(443)
+        "<%= server.address %>"
+        port(<%= p('sawmill.nginx.port') %>)
         transport(tls)
         tls(
 <% if p("sawmill.skip_ssl_verify") %>

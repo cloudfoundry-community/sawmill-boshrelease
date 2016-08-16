@@ -5,6 +5,17 @@ packages:
 - eventlog
 - syslog-ng
 
+provides:
+- name: sawmill
+  type: sawmill
+  properties:
+  - sawmill.nginx.port
+  - sawmill.syslog.port
+
+consumes:
+- name: sawmill
+  type: sawmill
+
 templates:
   bin/nginx_ctl: bin/nginx_ctl
   bin/syslog-ng_ctl: bin/syslog-ng_ctl
@@ -26,8 +37,6 @@ properties:
        users:
        - name: user1
          pass: password
-  sawmill.servers:
-    description: List of sawmill server IPs
   sawmill.skip_ssl_verify:
     default: false
     description: Should we ignore self-signed/invalid certs when sending syslog messages to nginx?

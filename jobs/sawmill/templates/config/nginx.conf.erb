@@ -48,8 +48,8 @@ http {
         }
 
         location /publish {
-<% p("sawmill.servers").each do |server| %>
-            allow <%= server%>;
+<% link('sawmill').instances.each do |server| %>
+            allow <%= server.address %>;
 <% end %>
             allow 127.0.0.1;
             deny all;
@@ -68,8 +68,8 @@ stream {
 
     upstream syslog_tcp_backend {
         zone tcp_syslog 64k;
-<% p("sawmill.servers").each do |server| %>
-        server <%= server %>:1514;
+<% link('sawmill').instances.each do |server| %>
+        server <%= server.address %>:1514;
 <% end %>
     }
 }
