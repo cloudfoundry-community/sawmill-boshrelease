@@ -105,4 +105,6 @@ you cannot log into Sawmill to stream its logs anymore. By default on `warden`,
 Sawmill ships with an admin/admin user for bosh-lite. All other environments
 require you to add your own user + passwords. 
 
-After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).
+If the SSL cert/key are not provided, a random one will be generated for you,
+but you will likely need to set the `sawmill.skip_ssl_verify` property for things
+to work properly.
