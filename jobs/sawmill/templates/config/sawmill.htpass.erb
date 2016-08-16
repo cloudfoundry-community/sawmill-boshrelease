@@ -1,0 +1,6 @@
+<%
+salt =  ""
+12.times{salt << (65 + rand(25)).chr}
+p("sawmill.users").each do |user| %>
+<%= user["name"] %>:<%= user["pass"].crypt(salt) %>
+<% end %>

@@ -40,3 +40,7 @@ networks:
 properties:
   syslog:
     skip_ssl_verify: true
+  sawmill:
+    users:
+    - name: admin
+      pass: admin

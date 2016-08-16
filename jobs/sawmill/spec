@@ -13,11 +13,21 @@ templates:
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   config/nginx.conf.erb: config/nginx.conf
+  config/sawmill.htpass.erb: config/sawmill.htpass
   config/ssl_key.erb: config/ssl_key
   config/ssl_crt.erb: config/ssl_crt
   config/syslog-ng.conf.erb: config/syslog-ng.conf
 
 properties:
+
+  sawmill:
+    users:
+    default: []
+    description: List of users to access sawmill with
+    example: |
+       users:
+       - name: user1
+         pass: password
   nginx.port:
     default: 443
     description: Port nginx will be listening on to provide websocket access to log messages

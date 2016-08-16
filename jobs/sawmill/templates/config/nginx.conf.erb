@@ -29,6 +29,8 @@ http {
         add_header                Strict-Transport-Security max-age=15768000;
 
         location / {
+            auth_basic "Sawmill <%= spec.deployment %>";
+            auth_basic_user_file /var/vcap/jobs/sawmill/config/sawmill.htpass;
             push_stream_subscriber;
             push_stream_channels_path logs;
             push_stream_message_template ~text~\n;
@@ -36,6 +38,8 @@ http {
         }
 
         location /ws/ {
+            auth_basic "Sawmill <%= spec.deployment %>";
+            auth_basic_user_file /var/vcap/jobs/sawmill/config/sawmill.htpass;
             push_stream_subscriber websocket;
             push_stream_websocket_allow_publish off;
             push_stream_ping_message_interval 10s;
