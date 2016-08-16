@@ -1,9 +1,9 @@
 @version: 3.7
 
-options {threaded(yes) ; };
+options {threaded(yes); time-reopen(0); flush-timeout(250);};
 
 source s_external {
-  tcp(ip(0.0.0.0) port(1514) log-fetch-limit(100) log-iw-size(100));
+  tcp(ip(0.0.0.0) port(1514));
 };
 
 template t_http {
@@ -15,7 +15,7 @@ destination d_http {
     network(
         "<%= server %>"
         port(443)
-        transport(tls)
+        transport(tcp)
         tls(
 <% if p("syslog.skip_ssl_verify") %>
             peer-verify(required-untrusted)
@@ -23,9 +23,7 @@ destination d_http {
             peer-verify(required-trusted)
 <% end %>
         )
-        template(t_http) keep-alive(yes)
-        log-fifo-size(1000)
-        flush-lines(100)
+        template(t_http)
     );
 <% end %>
 };
