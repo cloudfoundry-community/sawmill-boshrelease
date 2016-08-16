@@ -38,9 +38,8 @@ networks:
       - 10.244.73.2 - 10.244.73.60
 
 properties:
-  syslog:
-    skip_ssl_verify: true
   sawmill:
+    skip_ssl_verify: true
     users:
     - name: admin
       pass: admin

@@ -19,5 +19,5 @@ jobs:
 networks: (( param "Please configure the global network definitions for this Deployment" ))
 
 properties:
-  syslog:
+  sawmill:
     servers: (( grab jobs.sawmill.networks.0.static_ips ))

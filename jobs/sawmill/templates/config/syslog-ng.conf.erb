@@ -11,13 +11,13 @@ template t_http {
 };
 
 destination d_http {
-<% p("syslog.servers").each do |server| %>
+<% p("sawmill.servers").each do |server| %>
     network(
         "<%= server %>"
         port(443)
         transport(tls)
         tls(
-<% if p("syslog.skip_ssl_verify") %>
+<% if p("sawmill.skip_ssl_verify") %>
             peer-verify(required-untrusted)
 <% else %>
             peer-verify(required-trusted)
@@ -35,7 +35,7 @@ destination d_debug {
 log {
     source(s_external);
     destination(d_http);
-<% if p("syslog.debug") %>
+<% if p("sawmill.debug") %>
     destination(d_debug);
 <% end %>
 };

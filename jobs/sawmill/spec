@@ -19,40 +19,40 @@ templates:
   config/syslog-ng.conf.erb: config/syslog-ng.conf
 
 properties:
-
-  sawmill:
-    users:
+  sawmill.users:
     default: []
     description: List of users to access sawmill with
     example: |
        users:
        - name: user1
          pass: password
-  nginx.port:
-    default: 443
-    description: Port nginx will be listening on to provide websocket access to log messages
-  nginx.ssl_crt:
+  sawmill.servers:
+    description: List of sawmill server IPs
+  sawmill.skip_ssl_verify:
+    default: false
+    description: Should we ignore self-signed/invalid certs when sending syslog messages to nginx?
+  sawmill.debug:
+    default: false
+    description: Enable debugging of syslog messages (writes all messages to disk)
+
+  sawmill.ssl_crt:
     description: SSL Certificate nginx will use (pem encoded)
-  nginx.ssl_key:
+  sawmill.ssl_key:
     description: Private key for nginx's SSL certificate (pem encoded)
-  nginx.ssl_timeout:
+  sawmill.nginx.ssl_timeout:
     description: 'Timeout for reusing the previously negotiated cryptographic parameters'
     default: 7200
-  nginx.worker_processes:
+  sawmill.nginx.port:
+    default: 443
+    description: Port nginx will be listening on to provide websocket access to log messages
+  sawmill.nginx.worker_processes:
     description: 'Number of nginx workers'
     default: 2
-  nginx.worker_connections:
+  sawmill.nginx.worker_connections:
     description: 'Number of nginx connections per worker'
     default: 8192
 
-  syslog.port:
+  sawmill.syslog.port:
     default: 514
     description: Port syslog will be listening on to receive log messages
-  syslog.debug:
-    default: false
-    description: Enable debugging of syslog messages (writes all messages to disk)
-  syslog.skip_ssl_verify:
-    default: false
-    description: Should we ignore self-signed/invalid certs when sending syslog messages to nginx?
-  syslog.servers:
-    description: List of sawmill server IPs
+

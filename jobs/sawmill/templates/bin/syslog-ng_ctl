@@ -18,7 +18,7 @@ case $1 in
     echo $$ > $PIDFILE
 
     exec /var/vcap/packages/syslog-ng/sbin/syslog-ng -F -f $JOB_DIR/config/syslog-ng.conf \
-        <%= p("syslog.debug") ? "--debug" : "" %> >>$LOG_DIR/syslog-ng.stdout.log 2>>$LOG_DIR/syslog-ng.stderr.log
+        <%= p("sawmill.debug") ? "--debug" : "" %> >>$LOG_DIR/syslog-ng.stdout.log 2>>$LOG_DIR/syslog-ng.stderr.log
     ;;
 
   stop)
