@@ -15,7 +15,7 @@ destination d_http {
     network(
         "<%= server %>"
         port(443)
-        transport(tcp)
+        transport(tls)
         tls(
 <% if p("syslog.skip_ssl_verify") %>
             peer-verify(required-untrusted)
