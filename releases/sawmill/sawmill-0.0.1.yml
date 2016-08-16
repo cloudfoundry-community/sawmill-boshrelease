@@ -1,0 +1,35 @@
+---
+packages:
+- name: eventlog
+  version: 2db2bf54c3017d0fcc8f205f0aa069391a373a91
+  fingerprint: 2db2bf54c3017d0fcc8f205f0aa069391a373a91
+  sha1: 050d44157860b1ba0e29d20df2cb161c893eb15b
+  dependencies: []
+- name: syslog-ng
+  version: f31b1ebb19a1f1682be2ff071224922f3e1d7876
+  fingerprint: f31b1ebb19a1f1682be2ff071224922f3e1d7876
+  sha1: f29187252782e0c99f2e2fcc46a804c49994b2df
+  dependencies:
+  - eventlog
+- name: nginx
+  version: ea728b1993dea9b337a4ddfcfaf3c2d10ae2c41b
+  fingerprint: ea728b1993dea9b337a4ddfcfaf3c2d10ae2c41b
+  sha1: 09bc191ab01f5da4f6a3968ab35ed8dadaa54037
+  dependencies: []
+jobs:
+- name: just_install_packages
+  version: 1d87ae6fbc2d8713ac65b074245e3a7249d9fb97
+  fingerprint: 1d87ae6fbc2d8713ac65b074245e3a7249d9fb97
+  sha1: d75d34dfc37e05d5c14bd5ee9ea0722d02931a78
+- name: sawmill
+  version: 4c9d8f81e91e510b9804a6b08bd1395294d4bb8c
+  fingerprint: 4c9d8f81e91e510b9804a6b08bd1395294d4bb8c
+  sha1: 06192ad6e3a8a53abd6cdb6c97accfebe1d4b8a6
+license:
+  version: e09a116c08dff0c25e9902db51f8e73a4e2ffb7c
+  fingerprint: e09a116c08dff0c25e9902db51f8e73a4e2ffb7c
+  sha1: a9fd90a4d89e4c7b0e01d2229809cdd250a61a79
+commit_hash: ea289093
+uncommitted_changes: true
+name: sawmill
+version: 0.0.1
