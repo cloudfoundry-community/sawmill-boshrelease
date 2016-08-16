@@ -1,6 +1,20 @@
 # BOSH Release for sawmill
 
-## Usage
+Sawmill is a system for aggregating logs into a single stream,
+which the consumer can then filter off of. It works fairly simply.
+Send your syslog data to any single node in the sawmill cluster.
+Connect via HTTP (or web sockets) to any node in the sawmill cluster.
+Watch the logs scroll by. Sawmill exists solely to stream live log data
+to operators. There are no intentions of adding buffering, or searching
+capabilities. It's simply here as an aid live debugging across multiple
+systems. For archiving logs, you may wish to send the sawmill stream into
+a long term storage facility (S3?). This release may provide that
+functionality down the road.
+
+In the future there will be a helpful client to assist in filtering
+logs, to target your searches. For now, you sadly have to `curl https://sawmill_ip | grep <stuff>`
+
+## Deploying Sawmill
 
 To use this bosh release, first upload it to your bosh:
 
@@ -25,52 +39,70 @@ templates/make_manifest aws-ec2
 bosh -n deploy
 ```
 
-### Override security groups
+## Sending Logs to Sawmill
 
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
+We strongly recommend using [nxlog](https://github.com/hybris/nxlog-boshrelease)
+to send the logs from your BOSH jobs into Sawmill. The only configuration required
+is to provide `nxlog` with the IP:PORT of syslog for one of your Sawmill servers.
+This will take most logs in `/var/vcap/sys/log`, and ship them via syslog to Sawmill.
+Some sanity exlusions are done by default, but inclusions/exclusions are fully customizable.
 
-Create a file `my-networking.yml`:
+We also strongly recommend against installing [nxlog](https://github.com/hybris/nxlog-boshrelease)
+on your Sawmill servers, to avoid logging loops. If you do, you should avoid logging the nginx access
+log, syslog-ng debug log, and syslog-ng stderr log.
 
-``` yaml
----
-networks:
-  - name: sawmill1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - sawmill
-```
+## Streaming Logs from Sawmill
 
-Where `- sawmill` means you wish to use an existing security group called `sawmill`.
+To retrieve logs from Sawmill, you have a couple options:
 
-You now suffix this file path to the `make_manifest` command:
+### HTTPS
 
-```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
-```
+Run a `curl -u username:password https://your.sawmill.ip` to receive the full
+sawmill stream. To limit it, pipe the output through grep.
 
-### Development
+### WSS
 
-As a developer of this release, create new releases and upload them:
+Connect your preferred WebSockets client to `https://your.sawmill.ip/ws`, specifying
+your username and password. Watch the data stream through!
 
-```
-bosh create release --force && bosh -n upload release
-```
+### Logemon-GO!
 
-### Final releases
+Stay tuned for the logemon-go utility for simplified streaming and filtering of
+Sawmill data. It will make use of the formatting of messages from
+[nxlog-boshrelease](https://github.com/hybris/nxlog-boshrelease), which is why we
+strongly recommend using it to send log data into sawmill.
 
-To share final releases:
+## Architecture
 
-```
-bosh create release --final
-```
+![Sawmill Architecture Diagram](sawmill-arch.png)
 
-By default the version number will be bumped to the next major number. You can specify alternate versions:
+### High Availability and Scaling
 
+Sawmill itself supports high availability out of the box. Logs sent to any of its servers
+are sent to any available node in the pool. Once processed, the log is sent to every Sawmill
+node's web publisher. This allows you to connect to any nodein the cluster, and receive
+all log data. If any node goes down, traffic will be rerouted to remaining up nodes,
+and come through as expected. If the node you are streaming from goes down, you can either
+reconnect to a different node in the cluster, or stick a load balancer in front of Sawmill,
+and reconnect to that. Similarly nodes submitting logs will need to do the same, if the node
+they communicate with goes away.
 
-```
-bosh create release --final --version 2.1
-```
+Note, due to this design, as you scale up node count, throughput may be reduced,
+since your log messages are sent to each server in the cluster.
+
+### Security Notes
+
+Sawmill uses SSL to transmit log data from syslog to the end user. However,
+it does not support encryption on the syslog side. In the future, we will add
+support to submit logs using syslog + TLS.
+
+Sawmill uses HTTP Basic Auth for authentication/authorization. It supports
+arbitrary numbers of user accounts to access it, so you may dole out access
+individually, or in bulk, as your security policy requires. We chose HTTP Basic
+Auth to keep moving parts minimal in the logging system, since the last thing
+you want to do while troubleshooting your authentication system is find that
+you cannot log into Sawmill to stream its logs anymore. By default on `warden`,
+Sawmill ships with an admin/admin user for bosh-lite. All other environments
+require you to add your own user + passwords. 
 
 After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).
