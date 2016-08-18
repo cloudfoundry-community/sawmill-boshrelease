@@ -19,3 +19,7 @@ syslog-ng/syslog-ng-3.7.3.tar.gz:
   object_id: 31a2de93-109e-4528-8e8a-86f1f74a7a4a
   sha: db5f1a14255582499ad9918917d9bdac1fa743c3
   size: 3511155
+go/go-1.6.3.tar.gz:
+  object_id: 9379e919-eb7f-4e5e-93e1-bde4cf7e9786
+  sha: 5e916ba4dd8c2fc43beafca4c08b334c4d0686f3
+  size: 84856920

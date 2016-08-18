@@ -1,0 +1,10 @@
+<% require 'json'
+	cfg = {}
+	cfg["syslog_port"] = p("sawmill.syslog.port")
+	cfg["web_port"] = p("sawmill.nginx.port")
+	cfg["username"] = p("sawmill.users")[0]["name"]
+	cfg["password"] = p("sawmill.users")[0]["pass"]
+	cfg["skip_ssl_verify"] = p("sawmill.skip_ssl_verify")
+	cfg["servers"] = link("sawmill").instances.map {|server| server.address}
+%><%= cfg.to_json %>
+

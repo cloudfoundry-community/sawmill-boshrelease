@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd /var/vcap/packages/sawmill-smoke-tests
+export GOPATH="${PWD}"
+export GOROOT="/var/vcap/packages/go"
+export PATH="${GOPATH}/bin:${GOROOT}/bin:${PATH}"
+
+CONFIG_PATH="/var/vcap/jobs/smoke-tests/config/smoke-tests.json" ./bin/test

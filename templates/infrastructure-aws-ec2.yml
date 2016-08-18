@@ -14,6 +14,9 @@ jobs:
       - name: sawmill1
         static_ips: (( static_ips(0, 1, 2, 3, 4, 5) ))
     persistent_disk: (( grab meta.persistent_disk ))
+  - name: smoke-tests
+    networks:
+      - name: sawmill1
 
 compilation:
   cloud_properties:

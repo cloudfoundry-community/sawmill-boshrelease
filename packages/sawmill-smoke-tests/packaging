@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+package="smoke-tests"
+cp -a ${package}/* ${BOSH_INSTALL_TARGET}/

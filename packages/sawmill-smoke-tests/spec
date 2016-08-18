@@ -1,0 +1,5 @@
+---
+name: sawmill-smoke-tests
+dependencies: []
+files:
+- smoke-tests/**/*
