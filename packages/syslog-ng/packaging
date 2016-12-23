@@ -75,7 +75,7 @@ export PKG_CONFIG_PATH=${BOSH_INSTALL_TARGET}/libpcre/lib64/pkgconfig:$PKG_CONFI
 # Build glib package
 echo "Building glib ${GLIB_VERSION}..."
 cd ${BOSH_COMPILE_TARGET}/glib-${GLIB_VERSION}
-./configure --prefix=${BOSH_INSTALL_TARGET}/glib --disable-libmount --use-pcre=internal CFLAGS="-O3 -fPIC"
+./configure --prefix=${BOSH_INSTALL_TARGET}/glib --disable-libmount --with-pcre=internal CFLAGS="-O3 -fPIC"
 make -j${CPUS}
 make install
 export PATH=${BOSH_INSTALL_TARGET}/glib/bin:$PATH
