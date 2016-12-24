@@ -8,15 +8,83 @@ CPUS=$(grep -c ^processor /proc/cpuinfo)
 # $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
 export HOME=/var/vcap
 
-VERSION=3.7.3
+VERSION=`ls -r syslog-ng/syslog-ng-*.tar.gz | sed 's/syslog-ng\/syslog-ng-\(.*\)\.tar\.gz/\1/' | head -1`
+PCRE_VERSION=`ls -r syslog-ng/pcre-*.tar.gz | sed 's/syslog-ng\/pcre-\(.*\)\.tar\.gz/\1/' | head -1`
+LIBFFI_VERSION=`ls -r syslog-ng/libffi-*.tar.gz | sed 's/syslog-ng\/libffi-\(.*\)\.tar\.gz/\1/' | head -1`
+GLIB_VERSION=`ls -r syslog-ng/glib-*.tar.gz | sed 's/syslog-ng\/glib-\(.*\)\.tar\.gz/\1/' | head -1`
 
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y libglib2.0-dev
+#export LIBFFI_CFLAGS="-I${BOSH_INSTALL_TARGET}/lib/libffi-${LIBFFI_VERSION}/include"
+#export LIBFFI_LIBS="-L${BOSH_INSTALL_TARGET}/lib -lffi"
+#export PCRE_CFLAGS="-I${BOSH_INSTALL_TARGET}/include"
+#export PCRE_LIBS="-L${BOSH_INSTALL_TARGET}/lib -lpcre"
+#export GLIB_CFLAGS="-I${BOSH_INSTALL_TARGET}/lib/glib-${GLIB_VERSION}/include"
+#export GLIB_LIBS="-L${BOSH_INSTALL_TARGET}/lib"
+export PKG_CONFIG_PATH=""
 
-tar -xzvf syslog-ng/syslog-ng-${VERSION}.tar.gz
-cd syslog-ng-${VERSION}
-export PKG_CONFIG_PATH=/var/vcap/packages/eventlog/lib/pkgconfig
- ./configure --prefix ${BOSH_INSTALL_TARGET} --disable-python
-make
+# Extract libffi package
+echo "Extracting libffi ${LIBFFI_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/syslog-ng/libffi-${LIBFFI_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting libffi ${LIBFFI_VERSION}"
+  exit 1
+fi
+
+# Extract PCRE package
+echo "Extracting PCRE ${PCRE_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/syslog-ng/pcre-${PCRE_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting PCRE ${PCRE_VERSION}"
+  exit 1
+fi
+
+# Extract glib package
+echo "Extracting glib ${GLIB_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/syslog-ng/glib-${GLIB_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting glib ${GLIB_VERSION}"
+  exit 1
+fi
+
+# Extract syslog-ng package
+echo "Extracting syslog-ng ${VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/syslog-ng/syslog-ng-${VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting syslog-ng ${VERSION}"
+  exit 1
+fi
+
+# Build LIBFFI package
+echo "Building LIBFFI ${LIBFFI_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/libffi-${LIBFFI_VERSION}
+./configure --prefix=${BOSH_INSTALL_TARGET}/libffi --libdir=${BOSH_INSTALL_TARGET}/libffi/lib64
+make -j${CPUS}
+make install
+#export PATH=${BOSH_INSTALL_TARGET}/libffi/bin:$PATH
+export PKG_CONFIG_PATH=${BOSH_INSTALL_TARGET}/libffi/lib64/pkgconfig:$PKG_CONFIG_PATH
+
+# Build PCRE package
+echo "Building PCRE ${PCRE_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/pcre-${PCRE_VERSION}
+./configure --prefix=${BOSH_INSTALL_TARGET}/libpcre --libdir=${BOSH_INSTALL_TARGET}/libpcre/lib64
+make -j${CPUS}
+make install
+export PATH=${BOSH_INSTALL_TARGET}/libpcre/bin:$PATH
+export PKG_CONFIG_PATH=${BOSH_INSTALL_TARGET}/libpcre/lib64/pkgconfig:$PKG_CONFIG_PATH
+
+# Build glib package
+echo "Building glib ${GLIB_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/glib-${GLIB_VERSION}
+./configure --prefix=${BOSH_INSTALL_TARGET}/glib --disable-libmount --with-pcre=internal CFLAGS="-O3 -fPIC"
+make -j${CPUS}
+make install
+export PATH=${BOSH_INSTALL_TARGET}/glib/bin:$PATH
+export PKG_CONFIG_PATH=${BOSH_INSTALL_TARGET}/glib/lib/pkgconfig:$PKG_CONFIG_PATH
+
+# Build syslog-ng
+echo "Building syslog-ng ${VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/syslog-ng-${VERSION}
+export PKG_CONFIG_PATH=/var/vcap/packages/eventlog/lib/pkgconfig:$PKG_CONFIG_PATH
+./configure --prefix=${BOSH_INSTALL_TARGET} --disable-python
+make -j${CPUS}
 make install
