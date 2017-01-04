@@ -1,0 +1,49 @@
+---
+packages:
+- name: eventlog
+  version: 34a1748e30c8bf0290b7c6a306f6eb1874dbe309
+  fingerprint: 34a1748e30c8bf0290b7c6a306f6eb1874dbe309
+  sha1: aa200931635f973ed4d9bd17346c8f96657b21ef
+  dependencies: []
+- name: go
+  version: d7c9eb6d6529d29e7eb69c7550fbd51dba8fe0c3
+  fingerprint: d7c9eb6d6529d29e7eb69c7550fbd51dba8fe0c3
+  sha1: dd5e5346253235923b90069290626773933f7fda
+  dependencies: []
+- name: nginx
+  version: ea728b1993dea9b337a4ddfcfaf3c2d10ae2c41b
+  fingerprint: ea728b1993dea9b337a4ddfcfaf3c2d10ae2c41b
+  sha1: 09bc191ab01f5da4f6a3968ab35ed8dadaa54037
+  dependencies: []
+- name: sawmill-smoke-tests
+  version: c5ccd9892104b38dd72fc92c59f509194fea1df8
+  fingerprint: c5ccd9892104b38dd72fc92c59f509194fea1df8
+  sha1: 9f6c8ef6bcd6a7a54b3677e0e2277f6a6783d747
+  dependencies: []
+- name: syslog-ng
+  version: 0573f7ff9bd08a8385f83f8222e0fca4b43e5854
+  fingerprint: 0573f7ff9bd08a8385f83f8222e0fca4b43e5854
+  sha1: 5c754e6d184d382d9fff1d262bd1004e8abaff0b
+  dependencies:
+  - eventlog
+jobs:
+- name: just_install_packages
+  version: 1d87ae6fbc2d8713ac65b074245e3a7249d9fb97
+  fingerprint: 1d87ae6fbc2d8713ac65b074245e3a7249d9fb97
+  sha1: d75d34dfc37e05d5c14bd5ee9ea0722d02931a78
+- name: sawmill
+  version: 4c9d8f81e91e510b9804a6b08bd1395294d4bb8c
+  fingerprint: 4c9d8f81e91e510b9804a6b08bd1395294d4bb8c
+  sha1: 06192ad6e3a8a53abd6cdb6c97accfebe1d4b8a6
+- name: smoke-tests
+  version: 9bd2ffa02b2770544fc16c21a93484a3343dbdb0
+  fingerprint: 9bd2ffa02b2770544fc16c21a93484a3343dbdb0
+  sha1: 71133c458bdf725329bd418c0e238baf8dd2fdbf
+license:
+  version: e09a116c08dff0c25e9902db51f8e73a4e2ffb7c
+  fingerprint: e09a116c08dff0c25e9902db51f8e73a4e2ffb7c
+  sha1: a9fd90a4d89e4c7b0e01d2229809cdd250a61a79
+commit_hash: 48fec1fa
+uncommitted_changes: true
+name: sawmill
+version: 0.0.3
