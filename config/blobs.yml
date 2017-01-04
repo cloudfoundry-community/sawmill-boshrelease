@@ -23,3 +23,19 @@ go/go-1.6.3.tar.gz:
   object_id: 9379e919-eb7f-4e5e-93e1-bde4cf7e9786
   sha: 5e916ba4dd8c2fc43beafca4c08b334c4d0686f3
   size: 84856920
+syslog-ng/glib-2.50.2.tar.gz:
+  object_id: 90b9abda-cad9-43a6-8c81-8830c559683c
+  sha: 4667580c2ebc8ea3ff719b27ac4254b40182823c
+  size: 15284001
+syslog-ng/libffi-3.2.1.tar.gz:
+  object_id: 85eb4f0c-5afe-4f17-ae42-c7cc65a217ca
+  sha: 280c265b789e041c02e5c97815793dfc283fb1e6
+  size: 940837
+syslog-ng/pcre-8.39.tar.gz:
+  object_id: f397e80e-4238-47c4-90d4-6821049a2c9e
+  sha: b3aec1f643d9701841e2f9d57ac121a7ff448fc8
+  size: 2062258
+syslog-ng/util-linux-2.29.tar.gz:
+  object_id: a18199e2-516d-40ea-b447-1bbc219e3049
+  sha: d0c3a8a4fbcc19c328a9b0f5844f906b5722b1f9
+  size: 9161747
