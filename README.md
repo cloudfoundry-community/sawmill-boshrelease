@@ -16,27 +16,20 @@ logs, to target your searches. For now, you sadly have to `curl https://sawmill_
 
 ## Deploying Sawmill
 
-To use this bosh release, first upload it to your bosh:
+To use this BOSH release:
 
 ```
-bosh target BOSH_HOST
+export BOSH_ENVIRONMENT=<alias>
+export BOSH_DEPLOYMENT=sawmill
 git clone https://github.com/cloudfoundry-community/sawmill-boshrelease.git
 cd sawmill-boshrelease
-bosh upload release releases/sawmill/sawmill-1.yml
+bosh deploy manifests/sawmill.yml --vars-store=tmp/creds.yml
 ```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster. Note that this requires that you have installed [spruce](https://github.com/geofffranks/spruce).
+To run the smoke tests:
 
 ```
-templates/make_manifest warden
-bosh -n deploy
-```
-
-For AWS EC2, create a single VM:
-
-```
-templates/make_manifest aws-ec2
-bosh -n deploy
+bosh run-errand smoke-tests
 ```
 
 ## Sending Logs to Sawmill
@@ -103,7 +96,7 @@ Auth to keep moving parts minimal in the logging system, since the last thing
 you want to do while troubleshooting your authentication system is find that
 you cannot log into Sawmill to stream its logs anymore. By default on `warden`,
 Sawmill ships with an admin/admin user for bosh-lite. All other environments
-require you to add your own user + passwords. 
+require you to add your own user + passwords.
 
 If the SSL cert/key are not provided, a random one will be generated for you,
 but you will likely need to set the `sawmill.skip_ssl_verify` property for things
