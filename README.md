@@ -1,4 +1,4 @@
-# BOSH Release for sawmill
+# Deploy Sawmill with BOSH
 
 Sawmill is a system for aggregating logs into a single stream,
 which the consumer can then filter off of. It works fairly simply.
@@ -13,6 +13,10 @@ functionality down the road.
 
 In the future there will be a helpful client to assist in filtering
 logs, to target your searches. For now, you sadly have to `curl https://sawmill_ip | grep <stuff>`
+
+* [Concourse CI](https://ci.starkandwayne.com/teams/main/pipelines/sawmill-boshrelease?groups=sawmill-boshrelease)
+* Pull requests will be automatically tested against a bosh-lite (see `testflight-pr` job)
+* Discussions and CI notifications at [#sawmill-boshrelease channel](https://cloudfoundry.slack.com/messages/C6SUUTMDJ/) on https://slack.cloudfoundry.org
 
 ## Deploying Sawmill
 
