@@ -70,6 +70,6 @@ stemcells:
 
 releases:
 - name: sawmill
-  version: 2.1.0
-  url: https://bosh.io/d/github.com/cloudfoundry-community/sawmill-boshrelease?v=2.1.0
-  sha1: e7f3f8687b907a5f5983a3d5aa0345c663f675db
+  version: 3.0.0
+  url: https://github.com/cloudfoundry-community/sawmill-boshrelease/releases/download/v3.0.0/sawmill-3.0.0.tgz
+  sha1: 71c169125db89ffc862072e42f0b3078207b29e5
